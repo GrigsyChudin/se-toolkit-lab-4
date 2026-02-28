@@ -1,6 +1,6 @@
 services:
   app:
-    build: .
+    image: dchudin/se-toolkit-lab:latest
     restart: unless-stopped
     ports:
       - ${APP_HOST_ADDRESS}:${APP_HOST_PORT}:${APP_CONTAINER_PORT}
