@@ -31,3 +31,23 @@ def test_filter_excludes_interaction_with_different_learner_id() -> None:
     result = _filter_by_item_id(interactions, item_id=1)
     assert len(result) == 1
     assert result[0].item_id == 1
+
+def test_filter_with_non_existent_item_id() -> None:
+    interactions = [_make_log(1, 1, 1)]
+    result = _filter_by_item_id(interactions, 999)
+    assert result == []
+
+def test_filter_preserves_order() -> None:
+    interactions = [_make_log(1, 1, 5), _make_log(2, 2, 5), _make_log(3, 3, 5)]
+    result = _filter_by_item_id(interactions, 5)
+    assert [i.id for i in result] == [1, 2, 3]
+
+def test_filter_handles_large_number_of_interactions() -> None:
+    interactions = [_make_log(i, 1, 1) for i in range(1000)]
+    result = _filter_by_item_id(interactions, 1)
+    assert len(result) == 1000
+
+def test_filter_excludes_all_when_no_match() -> None:
+    interactions = [_make_log(1, 1, 10), _make_log(2, 2, 20)]
+    result = _filter_by_item_id(interactions, 30)
+    assert len(result) == 0
