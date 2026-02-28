@@ -21,7 +21,7 @@ jobs:
           uv sync
 
       - name: Run Unit Tests
-        run: uv run poe test  #
+        run: uv run poe test 
       
       - name: Login to DockerHub
         uses: docker/login-action@v3
